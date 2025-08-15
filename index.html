@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Photo Frame Funwalk Bandara</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+    }
+    .container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        aspect-ratio: 9/16;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        transform: scaleX(-1); /* Mirror selfie mode */
+    }
+    img.frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <video id="camera" autoplay playsinline></video>
+        <img src="frame.png" alt="Story Frame" class="frame">
+    </div>
+
+<script>
+    const video = document.getElementById('camera');
+
+    // Aktifkan kamera belakang jika ada, kalau nggak ada pakai depan
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' }, 
+        audio: false
+    })
+    .then(stream => {
+        video.srcObject = stream;
+    })
+    .catch(err => {
+        console.error("Kamera gagal diakses:", err);
+    });
+</script>
+</body>
+</html>
